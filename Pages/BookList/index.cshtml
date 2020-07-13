@@ -1,0 +1,73 @@
+﻿@page
+@model BookListRazor.Pages.BookList.indexModel
+@{
+    ViewData["Title"] = "index";
+}
+
+
+<br />
+<br/>
+
+<div class="container row p-0 m-0">
+    <div class="col-9">
+        <h2 class="text-info">Book List</h2>
+    </div>
+    <div class="col-3">
+        <a asp-page="Create" class="btn btn-info btn-sm">Create New Book</a>
+    </div>
+    <div class="col-12 boarder p-3 mt-3">
+        <form method="post">
+           @if(Model.Books.Count() > 0)
+           {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        <label asp-for="Books.FirstOrDefault().Id"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Books.FirstOrDefault().Name"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Books.FirstOrDefault().Author"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Books.FirstOrDefault().ISBN"></label>
+                    </th>
+                    <th>
+                        <label for="Actions">Actions</label>
+                    </th>
+                </tr>
+                @foreach(var name in Model.Books)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => name.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => name.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => name.Author)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => name.ISBN)
+                        </td>
+                        <td>
+                            <button
+                                    asp-page-handler="Delete"
+                                    onclick="return confirm('Are you sure you want to delete?')"
+                                    asp-route-id="@name.Id"
+                                    class="btn btn-danger btn-sm">Delete</button>
+                            <a asp-page="Edit" asp-route-id="@name.Id" class="btn btn-info btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+           }
+           else
+           {
+               <p>No books are available</p>
+           }
+        </form>
+    </div>
+</div>
